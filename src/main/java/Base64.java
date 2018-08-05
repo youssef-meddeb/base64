@@ -1,6 +1,8 @@
-package com.owtelse.codec;
-
-import java.io.UnsupportedEncodingException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;;
 
 /**
  * Author: karl roberts
@@ -28,6 +30,11 @@ public class Base64 {
     public static String encode(byte[] byteData) throws UnsupportedEncodingException {
         return encode(byteData, DEFAULT_ENCODING);
     }
+    
+    public static byte[] encodeBytes(byte[] byteData) throws UnsupportedEncodingException {
+        return _encode(byteData);
+    }
+    
     public static String encode(byte[] byteData, String encoding) throws UnsupportedEncodingException {
         if(byteData == null) { throw new IllegalArgumentException("byteData cannot be null"); }
         return new String(_encode(byteData),encoding);
@@ -113,6 +120,12 @@ public class Base64 {
         return decode(encoded, DEFAULT_ENCODING);
     }
 
+
+    public static byte[] decodeBytes(byte[] encoded) throws UnsupportedEncodingException {
+        return _decode(encoded);
+    }
+
+    
     public static String decode(byte[] encoded, String encoding) throws UnsupportedEncodingException {
         if(encoded == null) { throw new IllegalArgumentException("encoded cannot be null"); }
         return new String(_decode(encoded), encoding);
@@ -226,6 +239,43 @@ public class Base64 {
             }
         }
         return byteDest;
+    }
+    
+    public static void main(String[] args) throws Exception
+    {
+       if (args.length != 3)
+       {
+          System.err.println("usage: java Base64 -[e or d] filepathnameToEncode flepathnameForResult");
+          System.err.println("usage: -e : to encode, -d to decode");
+          
+          return;
+       }
+       String encodedfile = null;
+       
+       String action = args[0];
+       final String ENCODE_ACTION = "-e";
+       final boolean encodeAction = action.equals(ENCODE_ACTION);
+       
+       File fileToencode = new File(args[1]);
+       File resultFile = new File(args[2]);
+	    try {
+	        FileInputStream fileInputStreamReader = new FileInputStream(fileToencode);
+	        byte[] bytes = new byte[(int)fileToencode.length()];
+	        fileInputStreamReader.read(bytes);
+	        fileInputStreamReader.close();
+	        FileOutputStream fos = new FileOutputStream(resultFile);
+	        if (encodeAction)
+	        	fos.write(encodeBytes(bytes));
+	        else
+	        	fos.write(decodeBytes(bytes));
+	        fos.flush();
+	        fos.close();
+	        System.out.println("done : "+resultFile.getAbsolutePath());
+	    } catch (java.io.FileNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
     }
 
 } // that's all folks!

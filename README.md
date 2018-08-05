@@ -1,33 +1,8 @@
 ## base64 - codec library for Base64.
+1. Copy taregt/Base64.class in your localhost
+2. check is java 8 is installed : java -version
+3. execute class : java Base64 -e filePathForFileToBeEncoded EncodedFilePath
+to decode you can use : 
+java Base64 -d EncodedFilePath DecodedFilePath
 
-Base64 codec. works well for small files and strings (due to internal array buffers) and well tested.
-Pretty quick. Room for improvement in future release, which will allow it to stream very large files.
-
-Relies on no library except core java.
-Compiled up to Java 1.5 language level so will work for 1.5 upwards.
-base64 is licensed with a BSD3 licence see the included LICENSE file for details.
-
-
-## State
-
-The 'base64' code is ready for use, for small files or Strings.
-A future release will add streaming to make it suitable for large files and improve its efficiency.
-
-## Thanks
-
-Thanks to Tom Daley who posted the Base64 encode algorithm at
-http://www.javaworld.com/javaworld/javatips/jw-javatip36-p2.html
-which helped me to create the decoder.
-
-## Author
-
-Karl Roberts <karl.roberts@owtelse.com>
-
-## Notes
-
- 1. official repository
-    <https://github.com/karlroberts/base64>
- 2. site and documentation
-    <https://github.com/karlroberts/base64>
- 3. license (3 point BSD style)
-    <https://github.com/karlroberts/base64/blob/master/LICENSE>
+if you have an older version of Java, you can recompile Base64.java : javac Base64.java
